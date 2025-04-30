@@ -10,7 +10,7 @@ function WatchlistPage() {
         const fetchWatchlist = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await axios.get('http://localhost:5000/api/watchlist', {
+                const res = await axios.get('https://movie-backend-djdp.onrender.com/api/watchlist', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setWatchlist(res.data);
@@ -24,7 +24,7 @@ function WatchlistPage() {
     const handleRemove = async (id) => {
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://localhost:5000/api/watchlist/${id}`, {
+            await axios.delete(`https://movie-backend-djdp.onrender.com/api/watchlist/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setWatchlist(prev => prev.filter(movie => movie._id !== id));
