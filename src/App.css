@@ -1,0 +1,342 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #111;
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  text-align: center;
+  /* Removed overflow-y: hidden; */
+}
+
+.homepage-content {
+  /* Allow scrolling by setting this property */
+  overflow-y: auto;
+  padding-bottom: 20px;
+  padding-top: 120px; /* Ensure content doesn't get hidden under the navbar */
+  max-height: calc(100vh - 120px); /* Adjust this value based on the height of the navbar */
+  
+}
+
+
+.search-bar-container {
+  margin-top: 100px; /* Ensure space for the fixed navbar */
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  background-color: #f9f9f9;
+  z-index: 10;
+}
+
+
+.search-bar {
+  padding: 12px 20px;
+  width: 320px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  color: #111;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar::placeholder {
+  color: #888;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #999;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Movie Grid */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  
+  max-width: 1200px;
+  margin: auto;
+  justify-items: center;
+}
+
+/* Movie Card */
+.movie-card {
+  position: relative;
+  width: 100%;
+  max-width: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-10px);
+}
+
+.poster-container {
+  position: relative;
+}
+
+.movie-card img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover img {
+  transform: scale(1.05);
+}
+
+.button-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .button-overlay {
+  opacity: 1;
+}
+
+.icon-button,
+.icon-btn {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.icon-button:hover,
+.icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: black;
+  transform: scale(1.1);
+}
+
+/* Auth Pages */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #111;
+  padding: 20px;
+  color: #fff;
+}
+
+.auth-form {
+  background: #000;
+  padding: 30px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #1c1c1c;
+  color: #fff;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.auth-form input:focus {
+  border-color: #888;
+  outline: none;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #e50914;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-form button:hover {
+  background-color: #b20710;
+}
+
+.auth-form p {
+  margin-top: 10px;
+  text-align: center;
+  color: #bbb;
+}
+
+.auth-form a {
+  color: #1e90ff;
+  text-decoration: none;
+}
+
+.auth-form a:hover {
+  text-decoration: underline;
+}
+
+/* Logout Button */
+.logout-button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  border: none;
+  background-color: transparent;
+  color: #111;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #c3070f;
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px;
+  width: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .search-bar {
+    width: 90%;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 300px) {
+  .search-bar {
+    
+    width: 80%;
+    padding: 12px;
+  }
+  .search-bar-container {
+   margin-top: 50px;
+
+}
+}
+
+@media (max-width: 400px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .movie-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .movie-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 300px) {
+  .auth-form {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 50%;
+  }
+
+  .auth-form button,
+  .auth-form input {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+.search-bar-container{
+  margin-top: 150px;
+}
+
+
+}
+.homepage {
+  padding-top: 120px; /* Adjust to your actual navbar height */
+  min-height: 100vh;
+}
+
+@media (max-width: 380px) {
+  .homepage {
+    padding-top: 120px; /* More padding for stacked navbar on small screens */
+  }
+  .search-bar-container{
+    margin-top: 50px;
+  }
+}
+

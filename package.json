@@ -1,0 +1,68 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "dependencies": {
+    "array-buffer-byte-length": "^1.0.2",
+    "axe-core": "^4.10.3",
+    "axios": "^1.9.0",
+    "bytes": "^3.1.2",
+    "doctrine": "^3.0.0",
+    "ejs": "^3.1.10",
+    "fast-levenshtein": "^2.0.6",
+    "fs-monkey": "^1.0.6",
+    "has-symbols": "^1.1.0",
+    "identity-obj-proxy": "^3.0.0",
+    "inherits": "^2.0.4",
+    "internal-slot": "^1.1.0",
+    "is-bigint": "^1.1.0",
+    "is-weakref": "^1.1.1",
+    "js-tokens": "^4.0.0",
+    "js-yaml": "^3.14.1",
+    "lodash": "^4.17.21",
+    "media-typer": "^0.3.0",
+    "mime-db": "^1.52.0",
+    "natural-compare-lite": "^1.4.0",
+    "p-limit": "^2.3.0",
+    "path-is-absolute": "^1.0.1",
+    "postcss-selector-parser": "^6.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.5.2",
+    "react-scripts": "^5.0.1",
+    "regex-parser": "^2.3.1",
+    "relateurl": "^0.2.7",
+    "serve-index": "^1.9.1",
+    "side-channel-weakmap": "^1.0.2",
+    "sprintf-js": "^1.0.3",
+    "unbox-primitive": "^1.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "author": "",
+  "license": "ISC",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.0.0"
+  }
+}
