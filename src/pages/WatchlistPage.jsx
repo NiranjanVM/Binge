@@ -38,10 +38,10 @@ function WatchlistPage() {
     const handleMarkAsWatched = async (movie) => {
         const token = localStorage.getItem('token');
         try {
-            await axios.post('http://localhost:5000/api/watched', movie, {
+            await axios.post('https://movie-backend-djdp.onrender.com/api/watched', movie, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            await axios.delete(`http://localhost:5000/api/watchlist/${movie._id}`, {
+            await axios.delete(`https://movie-backend-djdp.onrender.com/api/watchlist/${movie._id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setWatchlist(prev => prev.filter(item => item._id !== movie._id));
