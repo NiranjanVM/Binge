@@ -12,7 +12,7 @@ function RegisterPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http:https://movie-backend-djdp.onrender.com/api/auth/register', { username, password });
+            await axios.post('https://movie-backend-djdp.onrender.com/api/auth/register', { username, password });
             navigate('/login');
         } catch (err) {
             setError('Error creating account');
