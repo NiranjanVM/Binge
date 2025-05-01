@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaTrashAlt, FaEyeSlash } from 'react-icons/fa';  // Importing React Icons for buttons
-import '../App.css';  // Using your global styles
+import { FaTrashAlt, FaEyeSlash, FaPlus } from 'react-icons/fa'; // FaPlus for "Add to Watchlist"
+import '../App.css';
 
 function WatchedPage() {
     const [watchedMovies, setWatchedMovies] = useState([]);
+    const [watchlist, setWatchlist] = useState([]); // Add this to track the watchlist
 
     useEffect(() => {
         const fetchWatchedMovies = async () => {
@@ -18,7 +19,21 @@ function WatchedPage() {
                 console.error("Error fetching watched movies:", err);
             }
         };
+
+        const fetchWatchlist = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const res = await axios.get('https://movie-backend-djdp.onrender.com/api/watchlist', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setWatchlist(res.data); // Fetch and set watchlist data
+            } catch (err) {
+                console.error("Error fetching watchlist:", err);
+            }
+        };
+
         fetchWatchedMovies();
+        fetchWatchlist(); // Fetch watchlist when the component mounts
     }, []);
 
     const handleRemove = async (id) => {
@@ -32,6 +47,38 @@ function WatchedPage() {
         } catch (err) {
             console.error("Error removing movie:", err);
             alert("Failed to remove the movie.");
+        }
+    };
+
+    const handleAddToWatchlist = async (movie) => {
+        // Check if movie is already in watchlist
+        if (watchlist.find(item => item.title === movie.title)) {
+            alert("Movie already in Watchlist!");
+            return;
+        }
+
+        const token = localStorage.getItem('token');
+        try {
+            // Add movie to watchlist
+            await axios.post('https://movie-backend-djdp.onrender.com/api/watchlist', movie, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            // Remove movie from watched list
+            await axios.delete(`https://movie-backend-djdp.onrender.com/api/watched/${movie._id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            // Update local state for watched movies
+            setWatchedMovies(prev => prev.filter(item => item._id !== movie._id));
+
+            // Update the local state for the watchlist
+            setWatchlist(prev => [...prev, movie]); // Add the movie to the watchlist
+
+            alert("Movie moved to Watchlist!");
+        } catch (err) {
+            console.error("Error moving movie to watchlist:", err);
+            alert("Failed to move movie.");
         }
     };
 
@@ -51,7 +98,13 @@ function WatchedPage() {
                                         className="icon-btn remove-btn"
                                         onClick={() => handleRemove(movie._id)}
                                     >
-                                        <FaTrashAlt /> {/* React Icon for Trash */}
+                                        <FaTrashAlt />
+                                    </button>
+                                    <button
+                                        className="icon-btn"
+                                        onClick={() => handleAddToWatchlist(movie)}
+                                    >
+                                        <FaPlus /> {/* Add to Watchlist */}
                                     </button>
                                 </div>
                             </div>

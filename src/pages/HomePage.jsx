@@ -7,9 +7,37 @@ function HomePage() {
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearching, setIsSearching] = useState(false);
+    const [watchlist, setWatchlist] = useState([]);
+    const [watched, setWatched] = useState([]);
 
     const BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const TMDB_KEY = process.env.REACT_APP_TMDB_API_KEY;
+
+    // Fetch watchlist and watched on mount
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const fetchLists = async () => {
+            try {
+                const [watchlistRes, watchedRes] = await Promise.all([
+                    axios.get(`${BASE_URL}/api/watchlist`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }),
+                    axios.get(`${BASE_URL}/api/watched`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }),
+                ]);
+                setWatchlist(watchlistRes.data);
+                setWatched(watchedRes.data);
+            } catch (err) {
+                console.error("Error fetching watchlist/watched:", err);
+            }
+        };
+        fetchLists();
+    }, []);
+
+    useEffect(() => {
+        fetchLocalMovies();
+    }, []);
 
     const fetchLocalMovies = async () => {
         const token = localStorage.getItem('token');
@@ -22,10 +50,6 @@ function HomePage() {
             console.error("Error fetching local movies:", err);
         }
     };
-
-    useEffect(() => {
-        fetchLocalMovies();
-    }, []);
 
     const handleSearch = async (event) => {
         const query = event.target.value;
@@ -58,33 +82,41 @@ function HomePage() {
     };
 
     const handleAddToWatchlist = async (movie) => {
+        if (watchlist.find(item => item.title === movie.title)) {
+            alert("Movie already in Watchlist!");
+            return;
+        }
+
         const token = localStorage.getItem('token');
         if (!token) return alert('Token missing. Please log in again.');
 
         try {
-            await axios.post(
-                `${BASE_URL}/api/watchlist`,
-                { title: movie.title, poster: movie.poster },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            alert(`${movie.title} added to watchlist!`);
+            await axios.post(`${BASE_URL}/api/watchlist`, movie, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setWatchlist(prev => [...prev, movie]);
+            alert(`${movie.title} added to Watchlist!`);
         } catch (err) {
             console.error("Error adding to watchlist:", err);
-            alert('Failed to add movie to watchlist.');
         }
     };
 
     const handleMarkAsWatched = async (movie) => {
+        if (watched.find(item => item.title === movie.title)) {
+            alert("Already in Watched!");
+            return;
+        }
+        
+
         const token = localStorage.getItem('token');
         if (!token) return alert('Token missing. Please log in again.');
 
         try {
-            await axios.post(
-                `${BASE_URL}/api/watched`,
-                { title: movie.title, poster: movie.poster },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            alert(`${movie.title} marked as watched!`);
+            await axios.post(`${BASE_URL}/api/watched`, movie, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setWatched(prev => [...prev, movie]);
+            alert(`${movie.title} marked as Watched!`);
         } catch (err) {
             console.error("Error marking as watched:", err);
             alert('Failed to mark movie as watched.');
@@ -113,10 +145,10 @@ function HomePage() {
                                 <div className="poster-container">
                                     <img
                                         src={movie.poster}
-                                        alt={movie.title || 'Movie Poster'}
+                                        alt={movie.title}
                                         onError={(e) => {
                                             e.target.onerror = null;
-                                            e.target.src = '/fallback.jpg'; // Optional fallback
+                                            e.target.src = '/fallback.jpg';
                                         }}
                                     />
                                     <div className="button-overlay">
